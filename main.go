@@ -8,7 +8,7 @@ import (
 
 func main() {
 	fmt.Println("server run on port: 8080")
-	err := http.ListenAndServe(":8080", &indexHandler{})
+	err := http.ListenAndServe(":8080", http.HandlerFunc(handlerFunc))
 
 	if err != nil {
 		log.Println(err)
@@ -16,8 +16,6 @@ func main() {
 
 }
 
-type indexHandler struct{}
-
-func (*indexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func handlerFunc(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(("Hello, GOPHER")))
 }
