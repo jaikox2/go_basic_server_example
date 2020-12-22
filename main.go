@@ -17,5 +17,10 @@ func main() {
 }
 
 func handlerFunc(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte(("Hello, GOPHER")))
+	switch r.URL.Path {
+	case "/":
+		w.Write([]byte("Index Page"))
+	default:
+		w.Write([]byte("404 Page Not Found"))
+	}
 }
