@@ -8,7 +8,7 @@ import (
 
 func main() {
 	fmt.Println("server run on port: 8080")
-	err := http.ListenAndServe(":8080", http.HandlerFunc(handlerFunc))
+	err := http.ListenAndServe(":8080", http.HandlerFunc(mux))
 
 	if err != nil {
 		log.Println(err)
@@ -16,13 +16,25 @@ func main() {
 
 }
 
-func handlerFunc(w http.ResponseWriter, r *http.Request) {
+func mux(w http.ResponseWriter, r *http.Request) {
 	switch r.URL.Path {
 	case "/":
-		w.Write([]byte("Index Page"))
+		indexHandler(w, r)
 	case "/about":
-		w.Write([]byte("About Page"))
+		aboutHandler(w, r)
 	default:
-		w.Write([]byte("404 Page Not Found"))
+		notFoundHandler(w, r)
 	}
+}
+
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Index Page"))
+}
+
+func aboutHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("About Page"))
+}
+
+func notFoundHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("404 Page Not Found"))
 }
