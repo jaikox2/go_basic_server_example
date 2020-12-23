@@ -23,7 +23,7 @@ func mux(w http.ResponseWriter, r *http.Request) {
 	case "/about":
 		aboutHandler(w, r)
 	default:
-		notFoundHandler(w, r)
+		http.NotFound(w, r)
 	}
 }
 
@@ -33,8 +33,4 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 func aboutHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("About Page"))
-}
-
-func notFoundHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("404 Page Not Found"))
 }
