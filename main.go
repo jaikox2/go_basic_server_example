@@ -20,6 +20,8 @@ func handlerFunc(w http.ResponseWriter, r *http.Request) {
 	switch r.URL.Path {
 	case "/":
 		w.Write([]byte("Index Page"))
+	case "/about":
+		w.Write([]byte("About Page"))
 	default:
 		w.Write([]byte("404 Page Not Found"))
 	}
