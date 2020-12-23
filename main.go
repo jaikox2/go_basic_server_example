@@ -8,7 +8,12 @@ import (
 
 func main() {
 	fmt.Println("server run on port: 8080")
-	err := http.ListenAndServe(":8080", http.HandlerFunc(mux))
+
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", indexHandler)
+	mux.HandleFunc("/about", aboutHandler)
+
+	err := http.ListenAndServe(":8080", mux)
 
 	if err != nil {
 		log.Println(err)
@@ -16,18 +21,11 @@ func main() {
 
 }
 
-func mux(w http.ResponseWriter, r *http.Request) {
-	switch r.URL.Path {
-	case "/":
-		indexHandler(w, r)
-	case "/about":
-		aboutHandler(w, r)
-	default:
-		http.NotFound(w, r)
-	}
-}
-
 func indexHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
+	}
 	w.Write([]byte("Index Page"))
 }
 
